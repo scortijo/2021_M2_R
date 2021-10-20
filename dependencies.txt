@@ -1,0 +1,18 @@
+Dépendences à installer sur les postes de travail
+
+Logiciels de base : 
+R, RStudio, Logiciel de tableurs
+
+Packages R :
+install.packages(c("rmarkdown","tidyverse","knitr","visdat","plotly","ggpubr","gganimate","RColorBrewer","DT", "av", "gifski"))
+
+
+Pour les packages que gganimate est susceptible d'utiliser mais n'installe pas automatiquement (tous ne sont peut être pas utiles) :
+magick, svglite, testthat, base64enc, htmltools, covr, transformr, av, gifski, ragg
+
+
+Après vérification, pandoc est déjà inclu à RStudio, donc pas besoin de l'installer en plus. 
+Par contre, pour compiler des documents Rmarkdown en PDF, il faut tinytex, à installer comme suit si on le souhaite :
+
+install.packages('tinytex')
+tinytex::install_tinytex()  # install TinyTeX
