@@ -59,5 +59,8 @@ Pour cela:
 
 ## Liens utiles: 
 
+[Toutes les anti-sèches R](https://www.rstudio.com/resources/cheatsheets/)
+
+[Conseils de visualisation de données](https://www.data-to-viz.com/)
 
 
