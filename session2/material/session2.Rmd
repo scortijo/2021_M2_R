@@ -1,0 +1,285 @@
+---
+title: "Ajouter des informations à des graphiques"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+
+<br>
+
+
+Lors de cette séance nous allons apprendre:
+
+1. A créer des graphiques avec des `facets`
+
+2. A ajouter des résultats de tests statistiques à des graphiques
+
+3. A ajouter des statistiques descriptives à des graphiques
+
+4. A représenter des données temporelles
+
+
+<br>
+
+# Préparation de l'environnement de travail
+
+Tout d'abord ouvrez le _projet R_, créez un nouveau _script R_ et préparez votre environnement de travail:
+
+
+```{r}
+# Chargez la librairie `tidyverse` (aide: utilisez la fonction `library()`)
+
+
+# Importer `burghardt_et_al_2015_expt1.txt` et mettez le dans un objet appelé `expt1`
+#(aide: utilisez la fonction `read_tsv()`)
+
+```
+
+
+```{r,  eval = TRUE,message=FALSE, echo=FALSE}
+# Chargez la librairie `tidyverse` (aide: utilisez la fonction `library()`)
+library(tidyverse)
+
+# Importer `burghardt_et_al_2015_expt1.txt` et mettez le dans un objet appelé `expt1`
+#(aide: utilisez la fonction `read_tsv()`)
+
+expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
+
+```
+
+<br>
+
+# 1. Facetting
+
+Souvent trop de variables, ou de groupes, sont dans nos données pour pouvoir uniquement utiliser les couleurs pour les discriminer.  
+
+C'est le cas par exemple du scatterplot produit dans l'exercice précédent, où les points sont colorés en fonction du génotype. Il est difficile de bien discerner les données pour chaque génotype car ils sont très rapprochés. L'idéal serait d'avoir un scatterplot par génotype.   
+
+Ceci est assez facile à faire avec`ggplot2`, il suffit d'ajouter une couche au graphique appelée "facet":  
+
+- `facet_grid()` - qui permet d'organiser les panneaux du graphique en lignes et/ou colonnes  
+- `facet_wrap()` - qui permet d'organiser les panneaux du graphique à la suite les uns des autres qui reviennent à la ligne après un certain nombre de panneaux.  
+
+Voyons comment `facet_grid()` fonctionne:
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
+    geom_point() +
+    facet_grid(genotype ~ temperature)
+```
+
+Dans `facet_grid()`, nous utilisons la notation `(ligne ~ colonne)` pour définir les variables qui sont utilisées pour séparer les panneaux en ligne et colonnes.
+
+>**Exercice 4:** Les couleurs n'apportent plus d'information supplémentaire. Pensez à une utilisation plus intéressante des couleurs dans ce graphique. 
+
+Il est possible de ne préciser qu'une variable dans `facet_grid()` :
+
+```{r}
+# Faceter en ligne
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_grid(genotype ~ .)
+
+# Faceter en colonne
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_grid(. ~ genotype)
+```
+
+Il est aussi possible d'utiliser `facet_wrap()` si l'on n'utilise qu'une variable pour séparer les données :
+
+```{r decomposed plot}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_wrap( ~ genotype)
+```
+
+>**Exercice 5:** Modifiez le graphique précédent afin de séparer les données (facet) en fonction de `fluctuation` en ligne, et `day.length` en colonne et de colorer les points en fonction du génotype.
+
+```{r, echo = FALSE}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
+  geom_point() +
+  facet_grid(fluctuation ~ day.length)
+```
+
+En conclusion, **il est possible de représenter de nombreuses informations en combinant efficacement facets, couleurs et autres aesthetiques!**
+
+
+
+
+
+# 2. Ajouter des résultats de tests statistiques à des graphiques
+
+
+
+
+# 3. Ajouter des statistiques descriptives à des graphiques
+
+## Créer des chaînes de commandes avec les pipes `%>%`  
+
+Les "pipes" (`%>%`) permettent de faire une séquence d'opération sur des données, sans avoir besoin de créer des objets intermédiaires (ou de faire des commandes imbriquées très compliquées)
+
+Grace au symbole `%>%` pipe, nous pouvons créer une chaîne de commandes. Pour cela nous devons d'abord faire une commande et ajouter `%>%` à la fin de la ligne qui va utiliser le résultat de cette commande comme input pour la fonction à la ligne suivante. Nous allons utiliser les pipes à partir de maintenant pour créer des chaines de commandes.
+
+
+## Extraire les statistiques descriptives avec `group_by()` et `summarise()`
+
+
+Parfois nous voulons résumer nos données dans une table plus petite et en extraire des statistiques descriptives (moyenne, médiane, nombre d'observations ...).
+
+Ce type d'opération peut être fait avec la combinaison de deux fonctions: `group_by()` et `summarise()`.
+
+Notez que `group_by()` ne change pas le format de la table de données. Cette fonction liste des lignes qui doivent être groupées. Nous pouvons ensuite utiliser `summarise()` pour extraire des statistiques descriptives de chaque groupe.
+
+
+![](images/group_by_summarise.png)
+
+
+
+Par exemple, nous pouvons extraire la moyenne pour le temps de floraison de chaque génotype:  
+
+```{r}
+
+group_by(expt1, genotype) %>% 
+summarise(mean.days.to.flower = mean(days.to.flower, na.rm = TRUE))
+
+```
+
+
+L'output contient deux colonnes:
+
+- `genotype` qui est la colonne qui a servi à grouper les données
+
+- `mean.days.to.flower` qui est la colonne crée par la fonction `summarise`
+
+Il n'y a que 10 lignes dans cette table, une par génotype.
+
+
+Il est possible de grouper les données par plus d'une variable.
+
+Par exemple nous pouvons mesurer la moyenne, la médiane et l'écart type pour chaque génotype aux différentes températures:
+
+
+```{r}
+
+group_by(expt1, genotype, temperature) %>% 
+summarise(mean.days.flower = mean(days.to.flower, na.rm = TRUE),
+          sd.days.flower = sd(days.to.flower, na.rm = TRUE),
+          median.days.flower = median(days.to.flower, na.rm = TRUE))
+```
+
+Il y a maintenant 20 lignes dans la table, car chaque génotype apparaît deux fois (12 et 22 degrés)
+
+
+Une autre information utile que nous pouvons extraire est le nombre d'observation pour chaque groupe. Pour cela nous devons utiliser la fonction `n()`, dans `summarise()`  qui compte le nombre de ligne pour chaque groupe.
+
+Par exemple, pour connaitre le nombre d'observations pour chaque génotype:
+
+
+```{r}
+
+group_by(expt1, genotype) %>% 
+summarise(n.obs = n())
+```
+
+
+
+
+**Attention:** Quand vous utilisez la fonction `group_by()`, les lignes du tableau restent groupées en fonction de la variable utilisée. Les opérations suivantes vont utiliser ces groupes, ce qui peut poser problème. Pensez à utiliser la fonction `ungroup()` pour enlever les groupes quand vous avez fini avec `group_by()` et `summarise()`
+
+
+> **Exercice 1:**
+>
+> Calculez la médiane et l'écart-type de `blade.length.mm` et `total.leaf.length.mm` pour chaque `genotype` aux différentes `day.length`. Ajoutez aussi le nombre d'observations de chaque groupe 
+>
+>
+
+<br>
+
+## Insérer les statistiques descriptives à un graphique
+
+Une autre possibilité est d'ajouter les statistiques descriptives à un graphique contenant les données.
+
+Pour cela, nous devons:
+
+- Utiliser `group_by()` et `summarise()` pour extraire les statistiques descriptives
+
+- Utiliser une fonction de la famille `*_join()` pour les combiner avec nos données
+
+- Nous pouvons maintenant faire un graphique contenant les données et les statistiques descriptives.
+
+Par exemple, prenons ce boxplot:
+
+
+```{r}
+
+  ggplot( expt1, aes(genotype, rosette.leaf.num)) +
+  geom_boxplot()
+```
+
+
+
+Si nous voulons y ajouter le nombre d'observations pour chaque groupe, nous utilisons le script suivant:
+
+```{r}
+
+group_by(expt1, genotype) %>% 
+  summarise(n.obs=n()) %>% 
+  mutate(n.obs=paste("n =",n.obs)) %>% 
+  full_join(expt1, by="genotype") %>% 
+  ggplot( aes(genotype, rosette.leaf.num)) +
+  geom_boxplot() +
+  geom_text(aes(label=n.obs, x=genotype, y=0))
+```
+
+
+<br>
+
+> **Exercice 2**
+>
+> Faites un voilin plot de `total.leaf.length.mm` pour chaque génotype et ajoutez la médiane pour chaque groupe (avec un point coloré) ainsi que le nombre d'observation de chaque groupe
+>
+>
+
+
+<br>
+
+Avec cette même méthode il est aussi possible d'ajouter des informations pour des groupes formés à partir de deux variables.
+
+Par exemple, si nous voulons faire un boxplot `rosette.leaf.num` pour chaque génotype en fonction de la température et y ajouter le nombre d'observations des différents groupes, nous utilisons le script suivant:
+
+
+```{r}
+
+group_by(expt1, genotype, fluctuation) %>% 
+  summarise(n.obs=n()) %>% 
+  mutate(n.obs=paste("n =",n.obs)) %>% 
+  full_join(expt1, by=c("genotype", "fluctuation")) %>% 
+  ggplot( aes(genotype, rosette.leaf.num, fill=fluctuation)) +
+  geom_boxplot() +
+  geom_text(aes(label=n.obs, x=genotype, y=-2),position=position_dodge(0.8), angle=45)
+```
+
+
+
+# 4. Représenter des données temporelles
+
+
+-----
+
+-------
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+
+

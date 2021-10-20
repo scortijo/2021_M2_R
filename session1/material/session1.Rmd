@@ -12,7 +12,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 <br>
+
 [Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
+
 <br>
 
 
@@ -26,6 +28,7 @@ Lors de cette séance nous allons apprendre:
 
 3. A faire des graphiques avec `ggplot2` 
 
+<br>
 
 # 1. Organisation des données dans un tableur
 
