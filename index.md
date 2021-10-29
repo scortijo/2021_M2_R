@@ -14,14 +14,14 @@ Les différentes séances sont (avec accès au cours):
 ### Séance 1: 19/11/2021 9h45-13h (salle 5.129)
 
 
-[Matériel](session1/materiel/)  
+[Matériel](session1/materiel/session1.html)  
 
 [Solution des exercices](session1/materiel/)
 
 
 ### Séance 2: 23/11/2021 11h30-13h (salle 5.129) et 13h30-15h (salle 36.204)
 
-[Matériel](session2/materiel/)  
+[Matériel](session2/materiel/session2.html)  
 
 
 [Solution des exercices](session2/materiel/)
@@ -29,7 +29,7 @@ Les différentes séances sont (avec accès au cours):
 
 ### Séance 3:  26/11/2021 9h45-13h (salle 36.202)
 
-[Matériel](session3/materiel/)  
+[Matériel](session3/materiel/session3.html)  
 
 [Solution des exercices](session3/materiel/)
 
