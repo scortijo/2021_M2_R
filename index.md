@@ -10,30 +10,60 @@
 Ce cours va vous apprendre comment exporer des données et réaliser des graphiques dans **R**. 
 Les différentes séances sont (avec accès au cours):
 
+<br>
 
-### Séance 1: 19/11/2021 9h45-13h (salle 5.129)
+### Séance 1: 19/11/2021 9h45-13h (salle 5.129).
 
 
-[Matériel](session1/materiel/session1.html)  
+[Faire des graphiques avec R, lien vers le matériel](session1/materiel/session1.html)  
 
 [Solution des exercices](session1/materiel/)
 
 
-### Séance 2: 23/11/2021 11h30-13h (salle 5.129) et 13h30-15h (salle 36.204)
+### Séance 2: 23/11/2021 11h30-13h (salle 5.129) et 13h30-15h (salle 36.204). 
 
-[Matériel](session2/materiel/session2.html)  
+
+[Ajouter des statistiques à des graphiques, lien vers le matériel](session2/materiel/session2.html)  
 
 
 [Solution des exercices](session2/materiel/)
 
 
-### Séance 3:  26/11/2021 9h45-13h (salle 36.202)
+### Séance 3:  26/11/2021 9h45-13h (salle 36.202). 
 
 [Matériel](session3/materiel/session3.html)  
 
 [Solution des exercices](session3/materiel/)
 
+- Deuxième partie:
+**Travail de groupe: Exploration de données**
 
+[Un guide pour vous aider dans l'exploration des données]()
+
+<br>
+
+### Lien vers d'autres matériels de cours qui pourront être utiles
+
+
+[Antisèches]()
+
+[Comment trouver de l'aide]()
+
+[Comment choisir le bon type de graphique]()
+
+[Erreurs à éviter qand on fait des graphiques]()
+
+
+
+<br>
+
+## Examen final
+
+L'examen final sera sous la forme d'un projet de groupe. Le but sera d'analyser les données du TD du module de M1 Bioinformatique : données et bases de données (HAA812V), à partir duquel vous aurez créé un fichier bien organisé dans la partie du module sur les bases de données. Ce fichier contiendra les données de longueur de racine pour plusieurs génotypes, qui ont poussés dans différents milieux et pour lesquels vous avez des valeurs mesurées sur plusieurs années.  
+
+
+
+<br>
 
 ## Si vous voulez utiliser R chez vous: 
 Il est recommandé d'utiliser R régulièrement pour bien comprendre et aprendre. Pour cela le mieux est d'installer **R** et **R studio** sur votre ordinateur:

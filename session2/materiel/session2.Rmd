@@ -21,13 +21,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Lors de cette séance nous allons apprendre:
 
-1. A créer des graphiques avec des `facets`
 
 2. A ajouter des résultats de tests statistiques à des graphiques
 
 3. A ajouter des statistiques descriptives à des graphiques
 
-4. A représenter des données temporelles
+4. A représenter des données temporelles (gather et spread)
 
 
 <br>
@@ -60,71 +59,13 @@ expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
 
 <br>
 
-# 1. Facetting
 
-Souvent trop de variables, ou de groupes, sont dans nos données pour pouvoir uniquement utiliser les couleurs pour les discriminer.  
-
-C'est le cas par exemple du scatterplot produit dans l'exercice précédent, où les points sont colorés en fonction du génotype. Il est difficile de bien discerner les données pour chaque génotype car ils sont très rapprochés. L'idéal serait d'avoir un scatterplot par génotype.   
-
-Ceci est assez facile à faire avec`ggplot2`, il suffit d'ajouter une couche au graphique appelée "facet":  
-
-- `facet_grid()` - qui permet d'organiser les panneaux du graphique en lignes et/ou colonnes  
-- `facet_wrap()` - qui permet d'organiser les panneaux du graphique à la suite les uns des autres qui reviennent à la ligne après un certain nombre de panneaux.  
-
-Voyons comment `facet_grid()` fonctionne:
-
-```{r}
-ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
-    geom_point() +
-    facet_grid(genotype ~ temperature)
-```
-
-Dans `facet_grid()`, nous utilisons la notation `(ligne ~ colonne)` pour définir les variables qui sont utilisées pour séparer les panneaux en ligne et colonnes.
-
->**Exercice 4:** Les couleurs n'apportent plus d'information supplémentaire. Pensez à une utilisation plus intéressante des couleurs dans ce graphique. 
-
-Il est possible de ne préciser qu'une variable dans `facet_grid()` :
-
-```{r}
-# Faceter en ligne
-ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
-    geom_point() +
-    facet_grid(genotype ~ .)
-
-# Faceter en colonne
-ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
-    geom_point() +
-    facet_grid(. ~ genotype)
-```
-
-Il est aussi possible d'utiliser `facet_wrap()` si l'on n'utilise qu'une variable pour séparer les données :
-
-```{r decomposed plot}
-ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
-    geom_point() +
-    facet_wrap( ~ genotype)
-```
-
->**Exercice 5:** Modifiez le graphique précédent afin de séparer les données (facet) en fonction de `fluctuation` en ligne, et `day.length` en colonne et de colorer les points en fonction du génotype.
-
-```{r, echo = FALSE}
-ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
-  geom_point() +
-  facet_grid(fluctuation ~ day.length)
-```
-
-En conclusion, **il est possible de représenter de nombreuses informations en combinant efficacement facets, couleurs et autres aesthetiques!**
+# 1. Ajouter des résultats de tests statistiques à des graphiques
 
 
 
 
-
-# 2. Ajouter des résultats de tests statistiques à des graphiques
-
-
-
-
-# 3. Ajouter des statistiques descriptives à des graphiques
+# 2. Ajouter des statistiques descriptives à des graphiques
 
 ## Créer des chaînes de commandes avec les pipes `%>%`  
 
@@ -273,7 +214,7 @@ group_by(expt1, genotype, fluctuation) %>%
 
 
 
-# 4. Représenter des données temporelles
+# 3. Représenter des données temporelles (gather)
 
 
 -----

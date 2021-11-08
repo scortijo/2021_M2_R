@@ -28,6 +28,8 @@ Lors de cette séance nous allons apprendre:
 
 3. A faire des graphiques avec `ggplot2` 
 
+4. A créer des graphiques avec des `facets`
+
 <br>
 
 # 1. Organisation des données dans un tableur
@@ -154,8 +156,27 @@ library(plotly)
 
 ## Import et vérification des données
 
+Pour cette formation, nous allons utiliser une version légèrement modifiée du jeu de données publié par [Burghard et al 2015](http://datadryad.org/resource/doi:10.5061/dryad.65d76). 
 
-Les données sont dans le dossier ``session2_ggplot/data`` **(`nom du fichier`)**. **explicatif du jeu de données**
+Il s'agit d'une expérience de phénotypage de plantes d'*Arabidopsis thaliana* qui ont poussé dans différentes conditions:
+
+- A 12°C ou à 22°C
+- Avec une température constante ou qui fluctue dans la journée
+- Avec une période de 8h de jour ou de 16h de jour par cycle de 24h
+- Avec un traitement de froid qui immite l'hiver (vernalisation)
+
+Des plantes de différents génotypes ont été analysées: des mutants et sauvages et des écotypes différents.
+
+Pour chaque plante dans chaque condition plusieurs phénotypes ont été mesurés (voir illustration ci-dessous pour mieux comprendre les termes):
+
+- Le nombre de jour pour que la tige (qui contient les fleurs) emmerge: _days to bolt_
+- Le nombre de jour pour que la première fleur s'ouvre: _days to flower_
+- Le nombre de feuilles dans la rosette à la fin de l'expérience: _rosette leaf num_
+- Le nombre de feuilles caulines à la fin de l’expérience: _cauline leaf num_
+- La longueur du limbe de la feuille: _blade lenght mm_
+- La longueur de la feuille (avec le pétiole et le limbe) _total leaf length mm_
+
+![](images/explication_data.png){width=70%} 
 
 Afin de charger les données dans R, et de les garder dans un objet que nous pourrons réutiliser, nous utilisons:
 
@@ -243,7 +264,7 @@ Y a-t-il des problèmes?
 
 
 
-# 2. Faires des graphiques avec `ggplot2` 
+# 3. Faires des graphiques avec `ggplot2` 
 
 
 ## Quels types de graphiques pouvons nous faire avec ggplot2?
@@ -260,6 +281,8 @@ Parmi les plus connues:
 - [Des histogrammes](https://www.r-graph-gallery.com/histogram.html) 
 
 Et encore plus. Pour toutes les découvrir, voir [cette galerie de graphiques avec ggplot2](https://www.r-graph-gallery.com/index.html)
+
+Comme il existe de nombreuses options, utilisez [ce guide avec un arbre de décision](https://www.data-to-viz.com/) pour choisir la meilleure méthode de visualisation
 
 
 
@@ -395,6 +418,72 @@ ggplot(expt1, aes(genotype, days.to.flower)) +
 > Que se passe t-il si les points sont colorés en fonction de `days.to.bolt`?
 
 
+
+
+
+# 4. Créer des graphiques avec des `facets`
+
+Souvent trop de variables, ou de groupes, sont dans nos données pour pouvoir uniquement utiliser les couleurs pour les discriminer.  
+
+C'est le cas par exemple du scatterplot produit dans l'exercice précédent, où les points sont colorés en fonction du génotype. Il est difficile de bien discerner les données pour chaque génotype car ils sont très rapprochés. L'idéal serait d'avoir un scatterplot par génotype.   
+
+Ceci est assez facile à faire avec`ggplot2`, il suffit d'ajouter une couche au graphique appelée "facet":  
+
+- `facet_grid()` - qui permet d'organiser les panneaux du graphique en lignes et/ou colonnes  
+- `facet_wrap()` - qui permet d'organiser les panneaux du graphique à la suite les uns des autres qui reviennent à la ligne après un certain nombre de panneaux.  
+
+Voyons comment `facet_grid()` fonctionne:
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
+    geom_point() +
+    facet_grid(genotype ~ temperature)
+```
+
+Dans `facet_grid()`, nous utilisons la notation `(ligne ~ colonne)` pour définir les variables qui sont utilisées pour séparer les panneaux en ligne et colonnes.
+
+>**Exercice 4:** Les couleurs n'apportent plus d'information supplémentaire. Pensez à une utilisation plus intéressante des couleurs dans ce graphique. 
+
+Il est possible de ne préciser qu'une variable dans `facet_grid()` :
+
+```{r}
+# Faceter en ligne
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_grid(genotype ~ .)
+
+# Faceter en colonne
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_grid(. ~ genotype)
+```
+
+Il est aussi possible d'utiliser `facet_wrap()` si l'on n'utilise qu'une variable pour séparer les données :
+
+```{r decomposed plot}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point() +
+    facet_wrap( ~ genotype)
+```
+
+>**Exercice 5:** Modifiez le graphique précédent afin de séparer les données (facet) en fonction de `fluctuation` en ligne, et `day.length` en colonne et de colorer les points en fonction du génotype.
+
+```{r, echo = FALSE}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
+  geom_point() +
+  facet_grid(fluctuation ~ day.length)
+```
+
+En conclusion, **il est possible de représenter de nombreuses informations en combinant efficacement facets, couleurs et autres aesthetiques!**
+
+
+
+-----
+
+>**Exercice 6**: Reproduisez le graphique suivant (ou quelque chose d'approchant): 
+![Fig. 2B-C of Burghard et al 2015](images/Burghard_fig2BC.png). 
+>
+>**Indice**: facet le graphique avec `day.length` et `temperature` et colorer l'intérieur des boxplot en fonction de `fluctuation`.
 
 
 
