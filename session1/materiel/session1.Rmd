@@ -134,10 +134,24 @@ Pour cela, dans excel, choisissez "Enregistrez sous" et ensuite sélectionnez le
 # 2. Importer des données dans R et vérifier leur intégrité
 
 
+
+``R`` est un logiciel de statistique et un langage de programmation. Afin de faire quoi que ce soit avec ``R`` nous devons écrire des instructions avec un code spécifique. Apprendre à utiliser ``R`` peut prendre du temps mais nous allons le faire ensemble pas à pas. Cependant, le meilleur moyen d'apprendre est d'utiliser ``R`` régulièrement, par exemple pour vos projets de TP ou lors de vos stage.
+
+
+![](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/r_rollercoaster.png){width=70%} 
+
+
+Nous allons utiliser Rstudio, qui est un logiciel qui permet d'utiliser une interface facile d'utilisation quand nous travaillons avec ``R``.
+
+
+Voici à quoi ressemble RStudio:
+
+![](http://www.datacarpentry.org/R-ecology-lesson/img/rstudio-screenshot.png)
+
 ## Mise en place
 
+Tout d'abord, nous allons créer un `projet R` qui contiendra tous nos scripts et leurs sorties. Pour cela allez dans *file* puis selectionnez *New Project...*. Indiquez que vous voulez créer le projet dans un *Existing Directory*, choisissez le dossier contenant le cours (*2021_M2_R*) et cliquez sur *Create Project*. Cela va créer  `2021_M2_R.Rproj` qu'il vous suffit d'ouvrir la prochaine fois pour avoir accés à votre projet R dans Rstudio. 
 
-**Création du projet R**
 
 Lors de cette séance nous allons utiliser plusieurs packages qui contiennent les fonctions dont nous avons besoin:  
 - `tidyverse` qui contient plusieurs packages dont `ggplot2`  
