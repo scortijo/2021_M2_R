@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
 <br>
 
@@ -221,6 +221,6 @@ group_by(expt1, genotype, fluctuation) %>%
 
 -------
 
-[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
 

@@ -156,7 +156,6 @@ Tout d'abord, nous allons créer un `projet R` qui contiendra tous nos scripts e
 Lors de cette séance nous allons utiliser plusieurs packages qui contiennent les fonctions dont nous avons besoin:  
 - `tidyverse` qui contient plusieurs packages dont `ggplot2`  
 - `visdat`  qui permet une représentation rapide des données  
-- `plotly` pour faire des graphiques interactifs  
 
 
 Ces packages sont normalement déjà installés. Pour les importer dans votre session, utilisez la fonction ``library()`` : 
@@ -164,7 +163,6 @@ Ces packages sont normalement déjà installés. Pour les importer dans votre se
 ```{r load packages, eval = TRUE, message = FALSE}
 library(tidyverse)
 library(visdat)
-library(plotly)
 ```
 
 
@@ -499,12 +497,12 @@ En conclusion, **il est possible de représenter de nombreuses informations en c
 >
 >**Indice**: facet le graphique avec `day.length` et `temperature` et colorer l'intérieur des boxplot en fonction de `fluctuation`.
 
+<br>
+
+-----
 
 
-
-
-
-
+<br>
 
 # Ressources et liens utiles
 
@@ -519,13 +517,13 @@ En conclusion, **il est possible de représenter de nombreuses informations en c
 - [Gallerie de graphiques pouvant être réalisés avec ggplot2](https://www.r-graph-gallery.com/)
 
 
-- [Antisèche pour ggplot2](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+- [Antisèche pour ggplot2](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
 
 
 
 ******
 
-[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
 <br>
 
