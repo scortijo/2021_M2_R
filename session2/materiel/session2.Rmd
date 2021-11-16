@@ -499,7 +499,25 @@ filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>%
 ```
 
 
-Oc ces informations sont dans le titre des colonnes de notre tableau.  Pour changer le format et créer une colonne qui contient l'information du titre des colonnes, nous devons utiliser la fonction `gather()`
+Or ces informations sont dans le titre des colonnes de notre tableau.  Pour changer le format et créer une colonne qui contient l'information du titre des colonnes, nous devons utiliser la fonction `gather()`
+
+Voici comment la fonction `gather()` marche:
+
+![](images/image_gather.png){width=70%}
+
+
+[source de l'image](https://campus.datacamp.com/courses/working-with-data-in-the-tidyverse/tidy-your-data?ex=4)
+
+Essayons sur nos données:
+
+```{r}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>% 
+  gather(key="condition", value="expression", Log2FoldToZero_17c_15min:Log2FoldToZero_27c_4hr)  
+
+```
+
+Nous avons maintenant une colonne `condition`, qui contient le nom des colonnes que nous avons regroupées et une colonne `expression` qui contient les valeurs des colonnes (le niveu d'expression des gènes).
 -------
 
 [Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
