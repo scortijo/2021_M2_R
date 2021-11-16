@@ -187,6 +187,9 @@ Nous pouvons aussi ordonner les génotypes en fonction de `days.to.bolt`. Pour c
 
 <br>
 
+-----
+
+<br>
 
 # Pour aller plus loin
 
@@ -195,8 +198,6 @@ Nous n'avons vu que quelques unes des possibilités pour modifier ou réorganise
 Afin de découvrir les autres fonctions et de comprendre comment les utiliser, referez vous aux anti-sèches:
 
 [antisèche pour la réorganisation de données](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
-![](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 
 -----
