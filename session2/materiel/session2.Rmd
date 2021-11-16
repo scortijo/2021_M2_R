@@ -26,9 +26,9 @@ Lors de cette séance nous allons apprendre:
 
 2. A ajouter des statistiques descriptives à des graphiques
 
-3. A selectionner des lignes avec la fonction `filter` 
+3. A sélectionner des lignes avec la fonction `filter` 
 
-4. A représenter des données temporelles (gather et spread)
+4. A représenter des données temporelles 
 
 
 <br>
@@ -64,7 +64,7 @@ expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
 
 # 1. Ajouter des résultats de tests statistiques à des graphiques
 
-Pour pouvoir rajouter des résultats de tests statistiques à des graphiques, nous allons utiliser des fonctions de la librairie ggpubr.
+Pour pouvoir rajouter des résultats de tests statistiques à des graphiques, nous allons utiliser des fonctions de la librairie `ggpubr`.
 
 
 
@@ -72,7 +72,7 @@ Pour pouvoir rajouter des résultats de tests statistiques à des graphiques, no
 library(ggpubr)
 ```
 
-### Camparaison de moyennes de deux (ou plusieurs) groupes
+### Comparaison de moyennes de deux (ou plusieurs) groupes
 
 Afin de faire un test de comparaison de moyennes, nous utilisons la fonction `stat_compare_means`.
 
@@ -87,7 +87,7 @@ Comme nous avons deux groupes à comparer (température fluctuante vs températu
 
 <br>
 
-Plutôt que d'ajouter les valeurs des p-values, il est aussi possible d'utiliser un code à base d'étoiles pour indiquer le niveau de significatifité du test:
+Plutôt que d'ajouter les valeurs des p-values, il est aussi possible d'utiliser un code à base d'étoiles pour indiquer le niveau de significativité du test:
 
 ns: p > 0.05
 
@@ -108,7 +108,7 @@ ggplot(expt1, aes(genotype, days.to.flower, colour = fluctuation)) +
 
 <br>
 
-Par contre, s'il n'y a pas deux groupes clairement identifiés, tous les groupes vont être comparés, en utilisant par défault avec un test de Kruskal–Wallis: 
+Par contre, s'il n'y a pas deux groupes clairement identifiés, tous les groupes vont être comparés, en utilisant par défaut avec un test de Kruskal–Wallis: 
 
 
 ```{r}
@@ -137,7 +137,7 @@ ggplot(expt1, aes(blade.length.mm, rosette.leaf.num)) +
 
 <br>
 
-Par défault, un test de `pearson` est effectué. Pour utiliser un test de `spearman`, il faut utiliser `method="spearman"`
+Par défaut, un test de `pearson` est effectué. Pour utiliser un test de `spearman`, il faut utiliser `method="spearman"`
 
 
 ```{r}
@@ -158,7 +158,7 @@ ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
   stat_cor()
 ```
 
-Il est aussi possible d'ajouter une ligne de regression (linéaire ou non), incluant un intervalle de confiance, au graphique avec `geom_smooth()`. Notez cependant, comme on peut le voir ci-dessous, que cette fonction fonctionne mieux pour des regressions lineaires et non complexes.
+Il est aussi possible d'ajouter une ligne de régression (linéaire ou non), incluant un intervalle de confiance, au graphique avec `geom_smooth()`. Notez cependant, comme on peut le voir ci-dessous, que cette fonction fonctionne mieux pour des régressions linéaires et non complexes.
 
 
 ```{r}
@@ -321,7 +321,7 @@ group_by(expt1, genotype) %>%
 > Faites un voilin plot de `total.leaf.length.mm` pour chaque génotype et ajoutez la médiane pour chaque groupe (avec un point coloré) ainsi que le nombre d'observation de chaque groupe
 >
 > 
-> **BONUS:** Modifiez le graphiqe que vous venez de créer pour ajouter les comparaison de moyenne de chaque génotype avec `Col Ama` (comme sur le graphique ci-dessous)
+> **BONUS:** Modifiez le graphique que vous venez de créer pour ajouter les comparaison de moyenne de chaque génotype avec `Col Ama` (comme sur le graphique ci-dessous)
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -366,7 +366,7 @@ group_by(expt1, genotype, fluctuation) %>%
 
 
 
-# 3. Selectionner des lignes avec la fonction `filter` 
+# 3. Sélectionner des lignes avec la fonction `filter` 
 
 
 Avec la fonction `filter()`, nous pouvons garder toutes les lignes de notre table qui correspondent à des plantes qui ont subies une vernalisation.
@@ -449,11 +449,11 @@ filter(expt1, day.length == "8" | days.to.bolt > 85)
 
 
 
-# 4. Représenter des données temporelles (gather)
+# 4. Représenter des données temporelles 
 
-Pour représenter des données temporelles avec une ligne par individu mesuré, nous allons utiliser un autre jeu de données qui contient des transcriptomes effectués sur des plantes d'Arabidopsis thaliana ayant été traités pour 15 minutes, 1 heure ou 4 heures avec une température de 17°C ou 27°C.
+Pour représenter des données temporelles avec une ligne par individu mesuré, nous allons utiliser un autre jeu de données qui contient des transcriptomes effectués sur des plantes d'*Arabidopsis thaliana* ayant été traités pour 15 minutes, 1 heure ou 4 heures avec une température de 17°C ou 27°C.
 
-Tout d'abord, chargeons les données et gardons les dans l'object `RNAseq`:
+Tout d'abord, chargeons les données et gardons les dans l’objet `RNAseq`:
 
 ```{r}
 
@@ -517,7 +517,7 @@ filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>%
 
 ```
 
-Nous avons maintenant une colonne `condition`, qui contient le nom des colonnes que nous avons regroupées et une colonne `expression` qui contient les valeurs des colonnes (le niveu d'expression des gènes). Ce n'est pas encore exactement ce dont nous avons besoin car la colonne `condition` contient toutes les informations de l'expérience, mais nous voulons une colonne pour chacune de ces informations: méthode de normalisation, température, durée de traitement.
+Nous avons maintenant une colonne `condition`, qui contient le nom des colonnes que nous avons regroupées et une colonne `expression` qui contient les valeurs des colonnes (le niveau d'expression des gènes). Ce n'est pas encore exactement ce dont nous avons besoin car la colonne `condition` contient toutes les informations de l'expérience, mais nous voulons une colonne pour chacune de ces informations: méthode de normalisation, température, durée de traitement.
 
 Pour cela nous allons utiliser la fonction `separate`, qui permet de séparer une colonne en plusieurs colonnes:
 
