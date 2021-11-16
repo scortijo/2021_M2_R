@@ -22,9 +22,11 @@ knitr::opts_chunk$set(echo = TRUE)
 Lors de cette séance nous allons apprendre:
 
 
-2. A ajouter des résultats de tests statistiques à des graphiques
+1. A ajouter des résultats de tests statistiques à des graphiques
 
-3. A ajouter des statistiques descriptives à des graphiques
+2. A ajouter des statistiques descriptives à des graphiques
+
+3. A selectionner des lignes avec la fonction `filter` 
 
 4. A représenter des données temporelles (gather et spread)
 
@@ -62,8 +64,135 @@ expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
 
 # 1. Ajouter des résultats de tests statistiques à des graphiques
 
+Pour pouvoir rajouter des résultats de tests statistiques à des graphiques, nous allons utiliser des fonctions de la librairie ggpubr.
 
 
+
+```{r}
+library(ggpubr)
+```
+
+### Camparaison de moyennes de deux (ou plusieurs) groupes
+
+Afin de faire un test de comparaison de moyennes, nous utilisons la fonction `stat_compare_means`.
+
+
+```{r}
+ggplot(expt1, aes(genotype, days.to.flower, colour = fluctuation)) +
+  geom_boxplot() +
+  stat_compare_means(label = "p.format", method="t.test")
+```
+
+Comme nous avons deux groupes à comparer (température fluctuante vs température constante), la fonction fait la comparaison de ces deux groupes automatiquement pour chaque génotype et donne la p-value associée.
+
+<br>
+
+Plutôt que d'ajouter les valeurs des p-values, il est aussi possible d'utiliser un code à base d'étoiles pour indiquer le niveau de significatifité du test:
+
+ns: p > 0.05
+
+*: p <= 0.05
+
+**: p <= 0.01
+
+***: p <= 0.001
+
+****: p <= 0.0001
+
+
+```{r}
+ggplot(expt1, aes(genotype, days.to.flower, colour = fluctuation)) +
+  geom_boxplot() +
+  stat_compare_means(label = "p.signif", method="t.test")
+```
+
+<br>
+
+Par contre, s'il n'y a pas deux groupes clairement identifiés, tous les groupes vont être comparés, en utilisant par défault avec un test de Kruskal–Wallis: 
+
+
+```{r}
+ggplot(expt1, aes(genotype, days.to.flower)) +
+  geom_boxplot() +
+  stat_compare_means(label = "p.format")
+```
+
+
+
+
+
+Voir [ce site](http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/76-add-p-values-and-significance-levels-to-ggplots/) pour en savoir plus sur les différentes options de tests de comparaison de moyennes (comparaison de deux groupes et de multiples groupes).
+
+<br>
+
+### Tests de corrélation
+
+Il est aussi possible d'ajouter le résultat d'un test de corrélation (spearman ou pearson) à un scatterplot en utilisant la fonction `stat_cor()`:
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num)) +
+    geom_point()+
+  stat_cor()
+```
+
+<br>
+
+Par défault, un test de `pearson` est effectué. Pour utiliser un test de `spearman`, il faut utiliser `method="spearman"`
+
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num)) +
+    geom_point()+
+  stat_cor(method="spearman")
+```
+
+
+<br> 
+
+Si vous avez plusieurs groupes, `stat_cor` va calculer la corrélation pour chaque groupe.
+
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point()+
+  stat_cor()
+```
+
+Il est aussi possible d'ajouter une ligne de regression (linéaire ou non), incluant un intervalle de confiance, au graphique avec `geom_smooth()`. Notez cependant, comme on peut le voir ci-dessous, que cette fonction fonctionne mieux pour des regressions lineaires et non complexes.
+
+
+```{r}
+ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = fluctuation)) +
+    geom_point()+
+  stat_cor() +
+  geom_smooth()
+```
+
+
+
+> **Exercice 1:**
+>
+> Ajouter le test statistique le plus approprié aux deux graphiques suivant:
+
+
+
+```{r}
+ggplot(expt1, aes(fluctuation, rosette.leaf.num)) +
+  geom_violin() 
+```
+
+
+```{r}
+ggplot(expt1, aes(days.to.bolt, days.to.flower)) +
+    geom_point() 
+  
+```
+>
+> **BONUS:** Ajoutez une ligne de régression (pour le graphique où cela est possible).
+Déplacez le résultat du test statistique pour qu'il soit au meilleur endroit sur le graphique.
+Qu'est ce que vous pouvez conclure pour chacun de ces graphiques?
+
+<br>
 
 # 2. Ajouter des statistiques descriptives à des graphiques
 
@@ -140,11 +269,11 @@ summarise(n.obs = n())
 **Attention:** Quand vous utilisez la fonction `group_by()`, les lignes du tableau restent groupées en fonction de la variable utilisée. Les opérations suivantes vont utiliser ces groupes, ce qui peut poser problème. Pensez à utiliser la fonction `ungroup()` pour enlever les groupes quand vous avez fini avec `group_by()` et `summarise()`
 
 
-> **Exercice 1:**
+> **Exercice 2:**
 >
-> Calculez la médiane et l'écart-type de `blade.length.mm` et `total.leaf.length.mm` pour chaque `genotype` aux différentes `day.length`. Ajoutez aussi le nombre d'observations de chaque groupe 
+> Calculez la médiane et l'écart-type de `blade.length.mm` et `total.leaf.length.mm` pour chaque `genotype` aux différentes `day.length`. Calculez aussi le nombre d'observations de chaque groupe. 
 >
->
+
 
 <br>
 
@@ -187,11 +316,33 @@ group_by(expt1, genotype) %>%
 
 <br>
 
-> **Exercice 2**
+> **Exercice 3**
 >
 > Faites un voilin plot de `total.leaf.length.mm` pour chaque génotype et ajoutez la médiane pour chaque groupe (avec un point coloré) ainsi que le nombre d'observation de chaque groupe
 >
->
+> 
+> **BONUS:** Modifiez le graphiqe que vous venez de créer pour ajouter les comparaison de moyenne de chaque génotype avec `Col Ama` (comme sur le graphique ci-dessous)
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+my_comparisons <- list( c("Col Ama", "Col FRI"), c("Col Ama", "fca-6"),c("Col Ama", "flc-3 FRI"),
+                        c("Col Ama", "flk-1"),c("Col Ama", "fve-3"),c("Col Ama", "ld-1"),
+                        c("Col Ama", "Ler-1"),c("Col Ama", "prmt5 FRI"),c("Col Ama", "vin3-4 FRI"))
+
+
+group_by(expt1, genotype) %>% 
+  summarise(n.obs=n(),
+            mediane.leaf.length=median(total.leaf.length.mm, na.rm=TRUE)) %>% 
+  mutate(n.obs=paste("n =",n.obs)) %>% 
+  full_join(expt1, by="genotype") %>% 
+  ggplot( aes(genotype, total.leaf.length.mm)) +
+  geom_violin() +
+  geom_point(aes(x=genotype,y=mediane.leaf.length), colour="red") +
+  geom_text(aes(label=n.obs, x=genotype, y=0)) +
+  stat_compare_means(comparisons = my_comparisons)
+```
+
 
 
 <br>
@@ -214,11 +365,141 @@ group_by(expt1, genotype, fluctuation) %>%
 
 
 
-# 3. Représenter des données temporelles (gather)
+
+# 3. Selectionner des lignes avec la fonction `filter` 
 
 
------
+Avec la fonction `filter()`, nous pouvons garder toutes les lignes de notre table qui correspondent à des plantes qui ont subies une vernalisation.
 
+Tout d'abord, nous devons connaitre les différentes valeurs de la colonne `vernalization`. Comme nous pouvons voir, il y a deux options: 'NV' et 'V'.
+
+
+```{r}
+unique(expt1$vernalization)
+```
+
+(**note:** `$` permet de sélectionner une colonne en particulier de la table)
+
+Comme nous voulons garder les plantes qui ont subies une vernalisation, nous devons filtrer les données pour garder les lignes pour lesquelles il y a "V" dans la colonne `vernalization`:
+
+
+```{r}
+filter(expt1, vernalization == "V")
+```
+
+Nous pouvons utiliser les opérateurs suivant pour définir les conditions pour filtrer les données:
+
+
+Opérateur | Condition de sélection  | Exemple
+--------- | ----------------------  | ------
+`<`       | inférieur à             | `filter(expt1, days.to.bolt < 20)`
+`<=`      | inférieur ou égal à     | `filter(expt1, days.to.bolt <= 20)`
+`>`       | supérieur à             | `filter(expt1, days.to.bolt > 20)`
+`>=`      | supérieur ou égal à     | `filter(expt1, days.to.bolt >= 20)`
+`==`      | égal à                  | `filter(expt1, days.to.bolt == 20)`
+`!=`      | différent de            | `filter(expt1, days.to.bolt != 20)`
+`%in%`    | est contenu dans        | `filter(expt1, genotype %in% c("Col FRI", "Ler-1"))`
+
+
+Il est aussi possible de combiner plusieurs conditions de sélection avec les opérateurs suivant:
+
+Opérateur | Signification         | Exemple
+--------- | --------------------  | ------
+`&`       | ET                    | `filter(expt1, days.to.bolt == 20 & genotype == "Ler-1")`
+`|`       | OU                    | `filter(expt1, rosette.leaf.num < 8 | rosette.leaf.num > 100)`
+
+
+Nous pouvons aussi identifier les données manquantes (`NA`) avec la fonction `is.na()` ou sa négation (en utilisant `!`):
+
+Opérateur        | Signification          | Exemple
+---------------- | ---------------------  | ------
+`is.na()`        | données manquante      | `filter(expt1, is.na(rosette.leaf.num))`
+`!is.na()`       | donnée _non_ manquante | `filter(expt1, !is.na(rosette.leaf.num))`
+
+
+
+![](https://raw.githubusercontent.com/allisonhorst/stats-illustrations/master/rstats-artwork/dplyr_filter.jpg){width=90%}
+
+
+[source de l'image](https://github.com/allisonhorst/stats-illustrations)
+
+
+
+Par exemple, nous pouvons sélectionner les plantes qui ont été vernalisées **ET** qui ont poussées avec une température fluctuante:
+
+```{r, eval = FALSE}
+filter(expt1, vernalization == "V" & fluctuation == "Var")
+```
+
+Il est aussi possible de sélectionner les plantes qui ont poussées avec 8h de jours **OU** qui fleurissent tardivement:
+
+```{r, eval = FALSE}
+filter(expt1, day.length == "8" | days.to.bolt > 85)
+```
+
+
+
+> **Exercice 2:**
+> Filtrez les données pour garder les plantes selon les 3 cas de figures suivant (indépendants les uns des autres):
+>
+> 1. Plantes qui **ne sont pas du background Ler** et qui ont été traitées avec **une température fluctuante**.
+> 2. Plantes qui ont fleuries (bolt) en moins de  **57 jours** et qui ont **moins de 40 feuilles de rosette**
+> 3. Plantes du génotype **fca-6** pour qui le **blade.length.mm n'est pas manquant**
+
+
+
+
+# 4. Représenter des données temporelles (gather)
+
+Pour représenter des données temporelles avec une ligne par individu mesuré, nous allons utiliser un autre jeu de données qui contient des transcriptomes effectués sur des plantes d'Arabidopsis thaliana ayant été traités pour 15 minutes, 1 heure ou 4 heures avec une température de 17°C ou 27°C.
+
+Tout d'abord, chargeons les données et gardons les dans l'object `RNAseq`:
+
+```{r}
+
+RNAseq <- read_tsv("../data/data_expression_cortijo2017.txt")
+
+```
+
+
+
+L'objectif est d'obtenir un graphique de ce type:
+
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>% 
+  gather(key="condition", value="expression", Log2FoldToZero_17c_15min:Log2FoldToZero_27c_4hr) %>% 
+  separate(condition, into=c("normalisation", "temperature", "temps")) %>% 
+  ggplot(aes(x=temps, y=expression,color=temperature, group=temperature)) +
+  geom_line() +
+  facet_wrap(~gene, scales="free_y")
+
+```
+
+Pour cela nous devons d'abord filtrer les données pour ne garder que l'expression pour les gènes `AT1G04520` et `AT3G12580`
+
+
+```{r}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) 
+
+```
+
+Nous obtenons une table avec deux lignes, une par gène; et 8 colonnes, une par condition, plus une avec le cluster.
+Afin de pouvoir faire le graphique voulu, il nous faut un tableau avec une colonne contenant la durée de traitement, une autre avec la température de traitement et une troisième avec le niveau d'expression des gènes.  Comme le tableau ci-dessous: 
+
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>% 
+  gather(key="condition", value="expression", Log2FoldToZero_17c_15min:Log2FoldToZero_27c_4hr) %>% 
+  separate(condition, into=c("normalisation", "temperature", "temps")) 
+
+```
+
+
+Oc ces informations sont dans le titre des colonnes de notre tableau.  Pour changer le format et créer une colonne qui contient l'information du titre des colonnes, nous devons utiliser la fonction `gather()`
 -------
 
 [Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
