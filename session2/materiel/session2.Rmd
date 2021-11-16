@@ -499,7 +499,7 @@ filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>%
 ```
 
 
-Or ces informations sont dans le titre des colonnes de notre tableau.  Pour changer le format et créer une colonne qui contient l'information du titre des colonnes, nous devons utiliser la fonction `gather()`
+Or ces informations sont dans le titre des colonnes de notre tableau. Pour changer le format et créer une colonne qui contient l'information du titre des colonnes, nous devons utiliser la fonction `gather()`
 
 Voici comment la fonction `gather()` marche:
 
@@ -517,9 +517,60 @@ filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>%
 
 ```
 
-Nous avons maintenant une colonne `condition`, qui contient le nom des colonnes que nous avons regroupées et une colonne `expression` qui contient les valeurs des colonnes (le niveu d'expression des gènes).
+Nous avons maintenant une colonne `condition`, qui contient le nom des colonnes que nous avons regroupées et une colonne `expression` qui contient les valeurs des colonnes (le niveu d'expression des gènes). Ce n'est pas encore exactement ce dont nous avons besoin car la colonne `condition` contient toutes les informations de l'expérience, mais nous voulons une colonne pour chacune de ces informations: méthode de normalisation, température, durée de traitement.
+
+Pour cela nous allons utiliser la fonction `separate`, qui permet de séparer une colonne en plusieurs colonnes:
+
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>% 
+  gather(key="condition", value="expression", Log2FoldToZero_17c_15min:Log2FoldToZero_27c_4hr) %>% 
+  separate(condition, into=c("normalisation", "temperature", "temps")) 
+
+```
+
+Nous avons maintenant le format de tableau qui nous permet de faire le graphique voulu, montrant le changement d'expression au cours du temps en réponse au traitement de température pour nos deux gènes d'intérêt.
+
+
+```{r}
+
+filter(RNAseq, gene%in%c("AT1G04520","AT3G12580")) %>% 
+  gather(key="condition", value="expression", Log2FoldToZero_17c_15min:Log2FoldToZero_27c_4hr) %>% 
+  separate(condition, into=c("normalisation", "temperature", "temps")) %>% 
+  ggplot(aes(x=temps, y=expression,color=temperature, group=temperature)) +
+  geom_line() +
+  facet_wrap(~gene, scales="free_y")
+
+```
+
+**Attention**: quand nous utilisons `geom_line()`, l'argument `group=` est essentiel pour savoir comment relier les points ensemble en une (ou plusieurs) ligne(s).
+
+
+-----
+
+<br>
+
+
+Vous avez vu aujourd'hui, **qu'il est possible de rajouter de nombreuses informations à des graphiques, et de réorganiser vos données pour pouvoir faire la représentation la plus appropriée de vos données**
+
+<br>
+
 -------
+
+
+<br>
+
+# Ressources et liens utiles
+
+
+- [Antisèche pour ggplot2](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
+
+- [Antisèche pour la réorganisation de donnée](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+
+
+******
 
 [Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
-
+******

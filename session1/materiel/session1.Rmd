@@ -20,16 +20,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-Lors de cette séance nous allons apprendre:
-
-1. A organiser les données dans un fichier excel afin que ce soit compatible avec leur import dans ``R``
-
-2. A charger les données dans R et vérifier leur structure
-
-3. A faire des graphiques avec `ggplot2` 
-
-4. A créer des graphiques avec des `facets`
-
 <br>
 
 # 1. Organisation des données dans un tableur
@@ -98,14 +88,14 @@ La plupart d'entre nous utilisent à un moment donné ou à un autre, un tableur
 
 - Pour que ce soit compatible avec R, utiliser `_` plutôt que des espaces entre les mots.
 
-- *Attention aux dates!* Cela peut causer des problèmes de format d'un tableaur à un autre. Le mieux est de garder le jour, le mois et l'années commes des variables (colonnes) séparées
+- *Attention aux dates!* Cela peut causer des problèmes de format d'un tableur à un autre. Le mieux est de garder le jour, le mois et l’année comme des variables (colonnes) séparées
     
 
 
 
 ## Exporter les données
 
-Bien que excel est souvent utilisé, son format de fichier par défault n'est malheureusement pas compatible avec d'autres programmes, y compris ``R``. Pour cela le mieux est d'enregistrer les données tabulaires dans un format texte.  
+Bien que excel est souvent utilisé, son format de fichier par défaut n'est malheureusement pas compatible avec d'autres programmes, y compris ``R``. Pour cela le mieux est d'enregistrer les données tabulaires dans un format texte.  
 
 Les deux formats les plus utilisés sont:
 
@@ -115,7 +105,7 @@ _CSV_ (séparateur: virgule (UK, US) ou point-virgule (EU))
 _TXT_ (séparateur: tabulation)
 
 
-**Attention**: les documents avec un format _CSV_ qui ont un séparateur virgule ou un séparetur point-virgule ne sont pas la même chose. Les confondre peut poser des problèmes lors de l'import des données dans ``R``. C'est pourquoi nous recommendons de sauver les données en format _TXT_ (séparateur: tabulation) pour ensuite pouvoir les importer dans  ``R`.
+**Attention**: les documents avec un format _CSV_ qui ont un séparateur virgule ou un séparateur point-virgule ne sont pas la même chose. Les confondre peut poser des problèmes lors de l'import des données dans ``R``. C'est pourquoi nous recommandons de sauver les données en format _TXT_ (séparateur: tabulation) pour ensuite pouvoir les importer dans  ``R`.
 
 Pour cela, dans excel, choisissez "Enregistrez sous" et ensuite sélectionnez le format _TXT_ (séparateur: tabulation) .
 
@@ -150,7 +140,7 @@ Voici à quoi ressemble RStudio:
 
 ## Mise en place
 
-Tout d'abord, nous allons créer un `projet R` qui contiendra tous nos scripts et leurs sorties. Pour cela allez dans *file* puis selectionnez *New Project...*. Indiquez que vous voulez créer le projet dans un *Existing Directory*, choisissez le dossier contenant le cours (*2021_M2_R*) et cliquez sur *Create Project*. Cela va créer  `2021_M2_R.Rproj` qu'il vous suffit d'ouvrir la prochaine fois pour avoir accés à votre projet R dans Rstudio. 
+Tout d'abord, nous allons créer un `projet R` qui contiendra tous nos scripts et leurs sorties. Pour cela allez dans *file* puis sélectionnez *New Project...*. Indiquez que vous voulez créer le projet dans un *Existing Directory*, choisissez le dossier contenant le cours (*2021_M2_R*) et cliquez sur *Create Project*. Cela va créer  `2021_M2_R.Rproj` qu'il vous suffit d'ouvrir la prochaine fois pour avoir accès à votre projet R dans Rstudio. 
 
 
 Lors de cette séance nous allons utiliser plusieurs packages qui contiennent les fonctions dont nous avons besoin:  
@@ -175,13 +165,13 @@ Il s'agit d'une expérience de phénotypage de plantes d'*Arabidopsis thaliana* 
 - A 12°C ou à 22°C
 - Avec une température constante ou qui fluctue dans la journée
 - Avec une période de 8h de jour ou de 16h de jour par cycle de 24h
-- Avec un traitement de froid qui immite l'hiver (vernalisation)
+- Avec un traitement de froid qui imite l'hiver (vernalisation)
 
 Des plantes de différents génotypes ont été analysées: des mutants et sauvages et des écotypes différents.
 
 Pour chaque plante dans chaque condition plusieurs phénotypes ont été mesurés (voir illustration ci-dessous pour mieux comprendre les termes):
 
-- Le nombre de jour pour que la tige (qui contient les fleurs) emmerge: _days to bolt_
+- Le nombre de jour pour que la tige (qui contient les fleurs) émerge: _days to bolt_
 - Le nombre de jour pour que la première fleur s'ouvre: _days to flower_
 - Le nombre de feuilles dans la rosette à la fin de l'expérience: _rosette leaf num_
 - Le nombre de feuilles caulines à la fin de l’expérience: _cauline leaf num_
@@ -486,11 +476,10 @@ ggplot(expt1, aes(blade.length.mm, rosette.leaf.num, colour = genotype)) +
   facet_grid(fluctuation ~ day.length)
 ```
 
-En conclusion, **il est possible de représenter de nombreuses informations en combinant efficacement facets, couleurs et autres aesthetiques!**
-
-
 
 -----
+
+
 
 >**Exercice 6**: Reproduisez le graphique suivant (ou quelque chose d'approchant): 
 ![Fig. 2B-C of Burghard et al 2015](images/Burghard_fig2BC.png). 
@@ -501,6 +490,15 @@ En conclusion, **il est possible de représenter de nombreuses informations en c
 
 -----
 
+<br>
+
+En conclusion, **il est possible de représenter de nombreuses informations en combinant efficacement facets, couleurs et autres aesthetiques!**
+
+Cependant, il y a certains types de représentation à éviter, et d'autres qui sont plus adaptés à vos données. [Lisez ce document](graphiques_regles.html) pour en savoir plus sur les bonnes pratiques à suivre quand vous créez vos graphiques.
+
+<br>
+
+-----
 
 <br>
 

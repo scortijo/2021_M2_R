@@ -1,0 +1,289 @@
+---
+title: "Bonnes pratiques de visualisation de données"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+
+
+
+# Bonnes pratiques de visualisation de données
+
+<br>
+
+## Trouver le graphique approprié à vos données et à votre question
+
+Utiliser le graphique approprié à nos données et répondant à notre question est essentiel. Cependant cela n'est pas toujours intuitif et dépend:
+
+- **Du type de données**. S'agit t-il de nombres ou de catégories, ou d'une combinaison des deux? Ou bien de séries chronologique?
+
+-**Du nombre de variable à représenter**. Voulez vous montrer une seule variable ou plusieurs? Et s'il y en a deux, voulez vous les comparer directement (dans le cas de nombres)
+
+Comme il existe de nombreuses options, utilisez [ce guide avec un arbre de décision](https://www.data-to-viz.com/) pour choisir la meilleure méthode de visualisation
+
+
+> **Discussion de groupe**
+>
+> Discutez avec votre voisin des deux types de graphique suivant. 
+>
+> Les avez vous déjà utilisés? Si oui, pour représenter quel type de données?
+>
+> Sont ils appropriés à vos données et à votre question? Si non, quel autre
+> type de graphique utiliseriez vous maintenant que vous savez utiliser ggplot?
+>
+>
+> <br>
+>
+> **1. Le camembert (pie chart)**
+>
+> Aidez vous de cette figure comparant des camemberts et des barplots 
+> montrant les mêmes données 
+> 
+> ![](./images/camemberts.png){width=70%} 
+> 
+> [source de l'image](https://www.data-to-viz.com/caveat/pie.html)
+>
+> **2. Le barplot avec des barres d'erreur**
+>
+> Les barplots avec barre d'erreur permettent de représenter la moyenne d'une population (barplot) ainsi que 
+> la dispersion des données (barre d'erreur). 
+>
+> Mais est-ce idéal pour montrer nos données? Discutez en avec votre voisin en vous aidant 
+> de la figure ci-dessous extraite de
+> [Weissgerber et al., 2015](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002128).
+>
+> ![](./images/barplot_distribution.png){width=70%} 
+> 
+
+
+
+## Etre le plus près des données et ne pas cacher ou modifier les données étranges
+
+De manière générale il est recommandé d'être au plus près des données quand nous réalisons des graphiques.
+
+- Choisissez de présenter toutes vos données, sans les modifier ou en supprimer une partie (si vous le faites, vous devez expliquer ce que vous avez fait et pourquoi). 
+
+- Idéalement, et si cela se prête à votre question, montrez les données plutôt que des résumés. Choisissez des nuages de points plutôt que des barplots avec des barres d'erreur. 
+
+- Toujours indiquer la taille des effectifs, soit en l'écrivant dans le graphique, soit en le rendant visible (nuage de point, densité etc)
+
+Pour aller plus loin, nous allons regarder de plus prêt deux cas en particulier:
+
+#### 1. Comparer des distributions
+
+Pour rappel, le boxplot permet de montrer un bon résumé des données:
+![](./images/boxplot.png){width=70%} 
+
+[source de l'image](https://www.leansigmacorporation.com/box-plot-with-minitab/)
+
+
+Cependant, faire un résumé des données peut cacher des informations:
+
+- effectifs de différente taille dans certains groupes
+- distribution unimodale vs bimodale
+
+<br>
+
+Des alternatives existent pour représenter les données, afin d'éviter ces problèmes:
+
+- Si vous n'avez pas trop de points, vous pouvez les représenter au dessus des boxplots:
+![](./images/boxplot_jitter.png){width=70%} 
+
+[source de l'image](https://www.data-to-viz.com/caveat/boxplot.html)
+
+- Si vous avez trop de points pour les représenter dans le graphique, vous pouvez utiliser un violin plot  en indiquant la taille de l'effectif de chaque groupe:
+
+![](./images/violin.png){width=70%} 
+
+[source de l'image](https://www.data-to-viz.com/caveat/boxplot.html)
+
+#### 2. Axes coupés ou non?
+
+Si vous avez des données numériques avec des valeurs très éloignées de zéro il peut être tentant de ne pas faire commencer l'axe y à zéro mais plus proche de vos valeurs. Attention, cela peut cependant changer la conclusion!
+
+Voici un exemple avec deux graphiques, l'un avec l'axe des y commençant à zéro et l'autre non. Le deuxième peut donner l'impression qu'il y a une grande différence entre les deux groupes, même si ce n'est pas forcement le cas.
+
+
+![](./images/plot_axis_1.png){width=70%} ![](./images/plot_axis_2.png){width=70%}
+
+[source des images](https://rkabacoff.github.io/datavis/Advice.html)
+
+
+De manière générale:
+
+- Si vous utilisez des barplots ou des points avec différentes catégories à comparer, faites commencer l'axe y à zéro.
+
+- Si vous utilisez des lignes (comme dans le cas de séries chronologiques), il n'est pas nécessaire de faire commencer l'axe des y à zéro. En effet ce type de graphique permet de montrer l'évolution d'une observation par exemple au cours du temps. Alors que les barplots sont utilisés pour montrer la différence entre deux (ou plusieurs) groupes
+
+
+<br>
+
+Si vous avez des données numériques avec certains points très éloignés des autres il peut être tentant de couper l'axe y entre les groupes de points. Ne le faites jamais!! Il existe d'autres alternatives comme par exemple utiliser une échelle logarithmique. 
+
+
+
+## Comment bien faire ressortir le message des graphiques
+
+Maintenant que nous avons vu les erreurs à éviter quand nous créons des graphique, passons aux méthodes permettant de bien faire ressortir le message des graphiques. Cela permettra de faciliter l'interprétation des graphique. 
+
+De manière générale, évitez de faire des graphiques trop compliqués avec des fioritures. Évitez la 3D, les axes doubles et les lignes de grille. Concentrez vous sur l'essentiel! 
+
+Voyons trois méthodes plus en détail:
+
+
+#### 1. Ordonnez les données
+
+Par défaut, R va ordonner les catégories de vos variable par ordre alphabétique. Sur excel, l'ordre des variable dans le tableau est utilisé. Cependant cet ordre n'est pas toujours optimal.
+
+Vous pouvez changer l'ordre des catégories de vos variables sur R (nous verrons comment en séance 5). Voici quelques conseils pour bien choisir l’ordre dans lequel représenter les données.
+
+- Si vous comparez des données pour un (ou des) mutant à un wild type, ou si vous comparez un (ou plusieurs) traitement à un contrôle, **commencez toujours par la référence**, c.a.d le wild type ou le contrôle.
+
+- S'il n'y a pas de référence (wild type ou contrôle) et que vous voulez comparer différents conditions, dans ce cas **ordonnez vos catégories en fonction de leur valeur**, par exemple du plus grand au plus petit. Cela permettra facilement d'identifier les catégories avec les valeurs les plus grandes ou plus petites, ou les catégories avec des valeurs similaires.
+Voici un exemple d'un graphique avec des catégories non ordonnées, puis avec des catégories ordonnées. La version avec les catégories ordonnées est beaucoup plus facile à interpréter.
+
+
+![](./images/lollipot_non_ordonne.png){width=60%}
+![](./images/lollipot_ordonne.png){width=60%}
+
+
+[source des images](https://www.data-to-viz.com/caveat/order_data.html)
+
+
+#### 2. Évitez de mettre trop d'information dans vos graphiques
+
+Il est tentant de vouloir faire rentrer toutes vos données dans un même graphique, surtout qu'avec R vous pouvez jouer avec les couleurs, les formes et la taille des points. Mais pour que le message ressorte bien, il vaut mieux présenter moins de données et se concentrer sur **un message par graphique**. 
+
+
+- Pour des graphiques avec des lignes, montrer plus de quelques (5?) lignes peut rendre le graphique illisible. Sauf si vous voulez montrer que toutes les lignes se comportent de la même manière.
+
+![](./images/spaghetti.png){width=90%}
+
+Pour éviter ce problème, vous pouvez faire un graphique par ligne, ou mettre en valeur une ligne en particulier.
+
+![](./images/spaghetti_solution_separees.png){width=60%}
+![](./images/spaghetti_solution_couleur.png){width=80%}
+
+[source des images](https://www.data-to-viz.com/caveat/spaghetti.html)
+
+<br>
+<br>
+
+- Pour les graphiques avec des points, si vous avez trop de points il est difficile de bien l'interpréter. 
+
+
+Pour inclure l'information de la densité en points vous pouvez utiliser la transparence des points, ou montrer la densité en 2D ou 3D
+
+Graphique avec trop de points cachant la densité
+
+![](./images/point_sature.png){width=50%}
+
+Graphique avec une densité 2D
+
+![](./images/densite_2D.png){width=50%}
+
+Graphique avec une densité 3D
+
+![](./images/densite_3D.png){width=60%}
+
+[source des images](https://www.data-to-viz.com/caveat/overplotting.html)
+
+
+
+#### 3. Bien utiliser les couleurs 
+
+Un avantage de ggplot est qu'il offre une large palette de couleur. 
+Il existe d'ailleurs la libraire `RColorBrewer` qui contient de nombreuses palettes prédéfinies qui vous aideront beaucoup. 
+
+```{r  echo=FALSE, message=FALSE, warning=FALSE}
+
+library(RColorBrewer)
+
+```
+
+Voici toutes les palettes de couleur de `RColorBrewer`
+
+
+```{r  echo=FALSE, message=FALSE, warning=FALSE}
+
+display.brewer.all()
+
+```
+
+
+Surtout vous pouvez facilement y sélectionner les palettes de couleurs qui sont aussi visibles pour les daltoniens avec la commande:
+
+
+```{r  }
+
+display.brewer.all(colorblindFriendly = TRUE)
+
+```
+
+
+Maintenant que nous avons accès à toutes ces couleurs, encore faut-il bien les utiliser. 
+
+> **Discussion de groupe**
+>
+> Discutez avec votre voisin des graphiques suivant. 
+>
+> A votre avis, lesquels font une bonne ou une mauvaise utilisation des couleurs? Pourquoi?
+> (chaque exemple contient 2 graphiques)
+>
+> Exemple 1
+> ![](images/exemple_graph_1.png)
+>
+> Exemple2
+> ![](images/exemple_graph_2.png)
+>
+> Exemple 3
+> ![](images/exemple_graph_3.png)
+>
+> [source des graphiques](https://blog.datawrapper.de/colors/)
+
+
+Voici quelques conseils pour que la couleur dans les graphiques soit votre alliée et non l'inverse.
+
+- **N'utilisez des couleurs que si cela est nécessaire** au graphique et ajoute des informations. Sinon cela va juste créer une distraction et compliquer le graphique. Vous pouvez utiliser des couleurs pour représenter différents groupes, montrer un gradient ou insister sur certains points.
+De même ne colorez pas le fond des graphiques.
+
+- **N'utilisez pas plus de 7 couleurs dans un graphique**, sinon cela va créer de la confusion. Dans ce cas, choisissez un autre type de graphique qui permet de réduire le nombre de couleurs utilisées.
+
+- Si vous avez plusieurs graphiques qui contiennent les même variables, **soyez cohérent** et utilisez toujours les même couleurs pour ces variables.
+
+- **Assurez vous d'avoir une légende** qui indique à quoi correspondent les couleurs et mettez la au même endroit pour tous vos graphiques.
+
+- Si vous avez des données moins importantes dans un graphique, colorez les en gris et n'utilisez de la couleur pour les données que vous voulez faire ressortir. 
+
+- Assurez vous qu'il y a assez de contraste entre vos couleurs dans un graphique. Et aussi entre le texte et le fond pour que le texte soit bien lisible.
+
+- **Certaines couleurs sont associées à des idées dans notre culture**. Par exemple le rouge pour _non_ ou _mauvais_ et le vert pour _oui_ ou _bon_. Allez dans ce sens pour rendre vos graphiques plus faciles à lire. 
+
+- Si vous utilisez un gradient, **associez les couleurs claires aux faibles valeurs et les couleurs foncées aux valeurs élevées**. Par contre n'utilisez pas de gradients de couleurs pour des catégories, gardez les pour des valeurs numériques.
+
+Vous pouvez trouver des exemples de chaque cas et quelques points supplémentaires [ici](https://blog.datawrapper.de/colors/)
+
+
+
+
+# Ressources et liens utiles
+
+- [Aide au choix du type de graphique](https://www.data-to-viz.com/)
+- [Les erreurs à éviter lors de la création de graphiques](https://www.data-to-viz.com/caveats.html)
+- [Antisèche pour faire des graphiques intéractifs](https://images.plot.ly/plotly-documentation/images/r_cheat_sheet.pdf)
+
+
+-------
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+
