@@ -439,7 +439,7 @@ filter(expt1, day.length == "8" | days.to.bolt > 85)
 
 
 
-> **Exercice 2:**
+> **Exercice 4:**
 > Filtrez les données pour garder les plantes selon les 3 cas de figures suivant (indépendants les uns des autres):
 >
 > 1. Plantes qui **ne sont pas du background Ler** et qui ont été traitées avec **une température fluctuante**.

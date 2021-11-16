@@ -1,0 +1,81 @@
+---
+title: "Séance 1: solution des exercices"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
+
+
+
+<br>
+
+<br>
+
+```{r, echo=FALSE, message=FALSE}
+library(tidyverse)
+expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
+```
+
+
+
+
+> **Exercice 1:**
+>
+> Ajouter le test statistique le plus approprié aux deux graphiques suivant:
+
+
+
+```{r}
+ggplot(expt1, aes(fluctuation, rosette.leaf.num)) +
+  geom_violin() +
+  stat_compare_means()
+```
+
+
+```{r}
+ggplot(expt1, aes(days.to.bolt, days.to.flower)) +
+    geom_point() +
+  stat_cor()
+  
+```
+>
+> **BONUS:** Ajoutez une ligne de régression (pour le graphique où cela est possible).
+Déplacez le résultat du test statistique pour qu'il soit au meilleur endroit sur le graphique.
+Qu'est ce que vous pouvez conclure pour chacun de ces graphiques?
+
+
+
+```{r}
+ggplot(expt1, aes(days.to.bolt, days.to.flower)) +
+    geom_point() +
+  stat_cor() +
+  geom_smooth()
+  
+```
+
+On observe une correlation positive significative (p-value<2.2e-16, test de pearson) entre le nombre de jours jusqu'à floraison et le nombre de jours jusqu'au bolting.
+
+
+
+```{r}
+ggplot(expt1, aes(fluctuation, rosette.leaf.num)) +
+  geom_violin() +
+  stat_compare_means(label.x.npc="middle")
+  
+```
+
+On observe une différence significative (p-value=0.014, test de Wilcoxon) pour la moyenne du nombre de feuilles de rosettes en fonction du type de traitement de temmpérature utilisé. Les plantes ayant poussé avec une température constante ont un nombre de feuille plus élevé en moyenne que celles ayant poussé avec une température fluctuante.
+
+
+
+
