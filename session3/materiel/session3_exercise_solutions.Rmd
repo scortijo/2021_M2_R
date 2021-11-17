@@ -1,0 +1,35 @@
+---
+title: "Séance 3: solution des exercices"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
+
+
+
+<br>
+
+<br>
+
+```{r, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(ggpubr)
+expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
+```
+
+
+
+
+> **Exercice 1:**
+>
+> 

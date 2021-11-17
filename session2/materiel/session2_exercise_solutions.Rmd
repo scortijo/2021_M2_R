@@ -1,5 +1,5 @@
 ---
-title: "Séance 1: solution des exercices"
+title: "Séance 2: solution des exercices"
 output:
   html_document:
     toc: yes
@@ -23,6 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, echo=FALSE, message=FALSE}
 library(tidyverse)
+library(ggpubr)
 expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
 ```
 
@@ -63,7 +64,7 @@ ggplot(expt1, aes(days.to.bolt, days.to.flower)) +
   
 ```
 
-On observe une correlation positive significative (p-value<2.2e-16, test de pearson) entre le nombre de jours jusqu'à floraison et le nombre de jours jusqu'au bolting.
+On observe une corrélation positive significative (p-value<2.2e-16, test de pearson) entre le nombre de jours jusqu'à floraison et le nombre de jours jusqu'au bolting.
 
 
 
@@ -74,8 +75,105 @@ ggplot(expt1, aes(fluctuation, rosette.leaf.num)) +
   
 ```
 
-On observe une différence significative (p-value=0.014, test de Wilcoxon) pour la moyenne du nombre de feuilles de rosettes en fonction du type de traitement de temmpérature utilisé. Les plantes ayant poussé avec une température constante ont un nombre de feuille plus élevé en moyenne que celles ayant poussé avec une température fluctuante.
+On observe une différence significative (p-value=0.014, test de Wilcoxon) pour la moyenne du nombre de feuilles de rosettes en fonction du type de traitement de température utilisé. Les plantes ayant poussé avec une température constante ont un nombre de feuille plus élevé en moyenne que celles ayant poussé avec une température fluctuante.
 
+
+
+
+> **Exercice 2:**
+>
+> Calculez la médiane et l'écart-type de `blade.length.mm` et `total.leaf.length.mm` pour chaque `genotype` aux différentes `day.length`. Calculez aussi le nombre d'observations de chaque groupe. 
+>
+
+
+
+```{r}
+group_by(expt1, genotype, day.length) %>% 
+  summarise(mediane.blade.length.mm= median(blade.length.mm, na.rm=TRUE),
+            mediane.total.leaf.length.mm= median(total.leaf.length.mm, na.rm=TRUE),
+            sd.blade.length.mm= sd(blade.length.mm, na.rm=TRUE),
+            sd.total.leaf.length.mm= sd(total.leaf.length.mm, na.rm=TRUE))
+  
+```
+
+
+
+> **Exercice 3**
+>
+> Faites un voilin plot de `total.leaf.length.mm` pour chaque génotype et ajoutez la médiane pour chaque groupe (avec un point coloré) ainsi que le nombre d'observation de chaque groupe
+>
+
+
+```{r}
+
+group_by(expt1, genotype) %>% 
+  summarise(n.obs=n(),
+            mediane.leaf.length=median(total.leaf.length.mm, na.rm=TRUE)) %>% 
+  mutate(n.obs=paste("n =",n.obs)) %>% 
+  full_join(expt1, by="genotype") %>% 
+  ggplot( aes(genotype, total.leaf.length.mm)) +
+  geom_violin() +
+  geom_point(aes(x=genotype,y=mediane.leaf.length), colour="red") +
+  geom_text(aes(label=n.obs, x=genotype, y=0)) 
+```
+
+
+> 
+> **BONUS:** Modifiez le graphique que vous venez de créer pour ajouter les comparaison de moyenne de chaque génotype avec `Col Ama` (comme sur le graphique ci-dessous)
+
+
+```{r}
+
+my_comparisons <- list( c("Col Ama", "Col FRI"), c("Col Ama", "fca-6"),c("Col Ama", "flc-3 FRI"),
+                        c("Col Ama", "flk-1"),c("Col Ama", "fve-3"),c("Col Ama", "ld-1"),
+                        c("Col Ama", "Ler-1"),c("Col Ama", "prmt5 FRI"),c("Col Ama", "vin3-4 FRI"))
+
+
+group_by(expt1, genotype) %>% 
+  summarise(n.obs=n(),
+            mediane.leaf.length=median(total.leaf.length.mm, na.rm=TRUE)) %>% 
+  mutate(n.obs=paste("n =",n.obs)) %>% 
+  full_join(expt1, by="genotype") %>% 
+  ggplot( aes(genotype, total.leaf.length.mm)) +
+  geom_violin() +
+  geom_point(aes(x=genotype,y=mediane.leaf.length), colour="red") +
+  geom_text(aes(label=n.obs, x=genotype, y=0)) +
+  stat_compare_means(comparisons = my_comparisons)
+```
+
+
+
+> **Exercice 4:**
+> Filtrez les données pour garder les plantes selon les 3 cas de figures suivant (indépendants les uns des autres):
+>
+> 1. Plantes qui **ne sont pas du background Ler** et qui ont été traitées avec **une température fluctuante**.
+
+
+
+```{r, }
+
+filter(expt1, background!="Ler" & fluctuation=="Var")
+
+```
+
+> 2. Plantes qui ont fleuries (bolt) en moins de  **57 jours** et qui ont **moins de 40 feuilles de rosette**
+
+
+```{r, }
+
+filter(expt1, days.to.bolt<57 & cauline.leaf.num<40)
+
+```
+
+> 3. Plantes du génotype **fca-6** pour qui le **blade.length.mm n'est pas manquant**
+
+
+
+```{r, }
+
+filter(expt1, genotype=="fca-6", !is.na(blade.length.mm))
+
+```
 
 
 
