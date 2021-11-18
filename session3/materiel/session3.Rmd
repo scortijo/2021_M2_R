@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
 <br>
 
@@ -204,6 +204,6 @@ Afin de découvrir les autres fonctions et de comprendre comment les utiliser, r
 
 -------
 
-[Retour à la page d'accueil](https://scortijo.github.io/2021_L3_R/)
+[Retour à la page d'accueil](https://scortijo.github.io/2021_M2_R/)
 
 
