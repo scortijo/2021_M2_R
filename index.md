@@ -17,7 +17,7 @@ Les différentes séances sont (avec accès au cours):
 
 [Faire des graphiques avec R, lien vers le matériel](session1/materiel/session1.html)  
 
-[Solution des exercices](session1/materiel/)
+[Solution des exercices](session1/materiel/session1_exercise_solutions.html)
 
 
 ### Séance 2: 23/11/2021 11h30-13h (salle 5.129) et 13h30-15h (salle 36.204). 
@@ -26,19 +26,19 @@ Les différentes séances sont (avec accès au cours):
 [Ajouter des statistiques à des graphiques, lien vers le matériel](session2/materiel/session2.html)  
 
 
-[Solution des exercices](session2/materiel/)
+[Solution des exercices](session2/materiel/session2_exercise_solutions.html)
 
 
 ### Séance 3:  26/11/2021 9h45-13h (salle 36.202). 
 
 [Matériel](session3/materiel/session3.html)  
 
-[Solution des exercices](session3/materiel/)
+[Solution des exercices](session3/materiel/session3_exercise_solutions.html)
 
 - Deuxième partie:
 **Travail de groupe: Exploration de données**
 
-[Un guide pour vous aider dans l'exploration des données]()
+**A VENIR** [Un guide pour vous aider dans l'exploration des données]()
 
 <br>
 
