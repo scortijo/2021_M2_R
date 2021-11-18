@@ -173,7 +173,7 @@ Nous pouvons aussi ordonner les génotypes en fonction de `days.to.bolt`. Pour c
 
 
 
-> **Exercice 3**
+> **Exercice 2**
 >
 > Représenter des violin plots de `cauline.leaf.num` pour les génotypes de `background` "Col", colorés par la température et ce uniquement pour les plantes sans fluctuation de température et qui sont en jours longs (16 h). 
 >

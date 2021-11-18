@@ -30,6 +30,56 @@ expt1 <- read_tsv("../data/burghardt_et_al_2015_expt1.txt")
 
 
 
+
 > **Exercice 1:**
 >
-> 
+> Créez une nouvelle colonne (blade.ratio) avec le ratio de `blade.length.mm` et `total.leaf.length.mm`
+>
+
+
+
+```{r}
+
+mutate(expt1, blade.ratio=blade.length.mm/total.leaf.length.mm)
+
+```
+
+
+
+
+
+> **Exercice 2**
+>
+> Représenter des violin plots de `cauline.leaf.num` pour les génotypes de `background` "Col", colorés par la température et ce uniquement pour les plantes sans fluctuation de température et qui sont en jours longs (16 h). 
+>
+> Ordonnez les génotypes selon ces deux cas (un graphique par cas):
+>
+> -1 Dans l'ordre suivant: "Col Ama", "ld-1", "fve-3", "flk-1"
+>
+> -2 Dans l'ordre de la valeur de `cauline.leaf.num`
+
+
+
+
+```{r}
+
+# Ordonnez les génotypes dans l'ordre suivant: "Col Ama", "ld-1", "fve-3", "flk-1"
+
+  filter(expt1, background=="Col" & fluctuation=="Con" & day.length==16) %>% 
+  mutate(genotype = factor(genotype, levels = c("Col Ama", "ld-1", "fve-3", "flk-1"))) %>% 
+  ggplot(aes(x=genotype, y=cauline.leaf.num, fill=factor(temperature))) +
+  geom_violin()
+
+
+# Ordonnez les génotypes dans l'ordre de la valeur de `cauline.leaf.num`
+
+  filter(expt1, background=="Col" & fluctuation=="Con" & day.length==16) %>% 
+  mutate(genotype = fct_reorder(genotype, cauline.leaf.num)) %>% 
+  ggplot(aes(x=genotype, y=cauline.leaf.num, fill=factor(temperature))) +
+  geom_violin()
+
+```
+
+
+
+
