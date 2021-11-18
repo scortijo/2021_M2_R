@@ -45,13 +45,13 @@ Les différentes séances sont (avec accès au cours):
 ### Lien vers d'autres matériels de cours qui pourront être utiles
 
 
-[Antisèches]()
+[Antisèches](https://www.rstudio.com/resources/cheatsheets/)
 
-[Comment trouver de l'aide]()
+[Comment trouver de l'aide](astuces.html)
 
-[Comment choisir le bon type de graphique]()
+[Comment choisir le bon type de graphique](https://www.data-to-viz.com/#explore)
 
-[Erreurs à éviter qand on fait des graphiques]()
+[Erreurs à éviter qand on fait des graphiques](https://www.data-to-viz.com/caveats.html)
 
 
 
