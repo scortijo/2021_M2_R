@@ -31,7 +31,7 @@ Les différentes séances sont (avec accès au cours):
 
 ### Séance 3:  26/11/2021 9h45-13h (salle 36.202). 
 
-[Matériel](session3/materiel/session3.html)  
+[Réorganiser les données, lien vers le matériel](session3/materiel/session3.html)  
 
 [Solution des exercices](session3/materiel/session3_exercise_solutions.html)
 
