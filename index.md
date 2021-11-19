@@ -61,6 +61,8 @@ Les différentes séances sont (avec accès au cours):
 
 L'examen final sera sous la forme d'un projet de groupe. Le but sera d'analyser les données du TD du module de M1 Bioinformatique : données et bases de données (HAA812V), à partir duquel vous aurez créé un fichier bien organisé dans la partie du module sur les bases de données. Ce fichier contiendra les données de longueur de racine pour plusieurs génotypes, qui ont poussés dans différents milieux et pour lesquels vous avez des valeurs mesurées sur plusieurs années.  
 
+Vous commencerez à travailler sur ce projet de groupe lors de la dernière séance, et devrez le rendre le 10 Décembre 2021.  
+
 
 
 <br>
