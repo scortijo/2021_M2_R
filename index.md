@@ -35,10 +35,25 @@ Les différentes séances sont (avec accès au cours):
 
 [Solution des exercices](session3/materiel/session3_exercise_solutions.html)
 
-- Deuxième partie:
+Deuxième partie:
 **Travail de groupe: Exploration de données**
 
-**A VENIR** [Un guide pour vous aider dans l'exploration des données]()
+**A VENIR** [Guide pour l'examen]()
+
+
+
+<br>
+
+## Examen final
+
+L'examen final sera sous la forme d'un projet de groupe. Le but sera d'analyser les données du TD du module de M1 Bioinformatique : données et bases de données (HAA812V), à partir duquel vous aurez créé un fichier bien organisé dans la partie de notre module sur les bases de données (avec Isabelle Mougenot). Ce fichier contiendra les données de longueur de racine pour plusieurs génotypes, qui ont poussés dans différents milieux et pour lesquels vous avez des valeurs mesurées sur plusieurs années.  
+
+Vous commencerez à travailler sur ce projet de groupe lors de la dernière séance, et devrez le rendre le vendredi 17 Décembre 2021 à minuit au plus tard.  
+
+[Guide pour l'examen]()
+
+
+<br>
 
 <br>
 
@@ -53,19 +68,13 @@ Les différentes séances sont (avec accès au cours):
 
 [Erreurs à éviter qand on fait des graphiques](https://www.data-to-viz.com/caveats.html)
 
+[Lien vers un cours de R plus complet](https://scortijo.github.io/2021_L3_R/)
 
 
 <br>
 
-## Examen final
-
-L'examen final sera sous la forme d'un projet de groupe. Le but sera d'analyser les données du TD du module de M1 Bioinformatique : données et bases de données (HAA812V), à partir duquel vous aurez créé un fichier bien organisé dans la partie du module sur les bases de données. Ce fichier contiendra les données de longueur de racine pour plusieurs génotypes, qui ont poussés dans différents milieux et pour lesquels vous avez des valeurs mesurées sur plusieurs années.  
-
-Vous commencerez à travailler sur ce projet de groupe lors de la dernière séance, et devrez le rendre le 10 Décembre 2021.  
-
-
-
 <br>
+
 
 ## Si vous voulez utiliser R chez vous: 
 Il est recommandé d'utiliser R régulièrement pour bien comprendre et aprendre. Pour cela le mieux est d'installer **R** et **R studio** sur votre ordinateur:

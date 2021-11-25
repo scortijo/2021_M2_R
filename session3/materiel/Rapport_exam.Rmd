@@ -1,0 +1,229 @@
+---
+title: "Guide pour la création du rapport d'exploration de données"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+
+
+# Consignes générales
+
+<br>
+
+**- Ce document va vous guider dans l'analyse des données, avec quelques questions vous indiquant quels graphique ou analyses faire. **
+
+
+<br>
+
+**- Pour votre rapport, vous allez travailler sur le fichier que vous avez créé dans la partie de ce module sur les bases de données. Si vous n'avez pas ce fichier, vous pouvez retélécharger le cours, où vous trouverez le fichier `dataPRL.csv` dans le dossier `session3/data` contenant les mesures de longueur de racine primaire pour plusieurs génotypes ayant poussé avec différents milieux de culture. Dans ce même dossier vous trouverez `genotype.csv` et `milieu.csv` qui contiennent les clés pour comprendre les codes des génotypes et milieux, respectivement. **  
+
+<br>
+
+
+**- Vous devrez rendre `un dossier` contenant:**
+
+**1. Le `projet R` que vous aurez créé **
+
+**2. Un dossier `data` contenant les données.  **
+
+**3. Le `script R` contenant vos codes permettant de répondre aux questions. N'oubliez pas de commentez votre code (en utilisant #) pour aider à sa lecture, par exemple en ajoutant la question à laquelle le code répond avant celui-ci **
+
+**4. Le `rapport`, au format pdf, contenant pour chaque question: **
+
+**- Un explicatif ce que vous allez faire (quelle est la question biologique et comment vous allez y répondre).**
+
+**- Le résultat obtenu par R (chiffres, tableau ou graphique).**
+
+*Aide: pour sauver les graphiques et pouvoir les intégrer au rapport utiliser la fonction `ggsave("mon_graphique.jpg")` en remplaçant `mon_graphique.jpg` par le nom du graphique*
+
+**- Et finalement une réponse à la question grâce au résultat des commandes.**
+
+<br>
+
+<span style="color: red;">**N'oubliez pas d'indiquer les numéros étudiant de tous les membres du groupe au début du script ET du rapport ** </span>
+
+**Envoyez l'ensemble du dossier zippé à sandra.cortijo@cnrs.fr (depuis votre email de l'université de Montpellier) au plus tard le 17/12/2021 à minuit. Si vous n'avez pas reçu de réponse de ma part accusant réception dans les 72h, contactez moi.**
+
+
+<br>
+
+# Préparation de l'environnement de travail
+
+<br>
+
+Tout d'abord créez un _projet R_, puis créez un _script R_ et préparez votre environnement de travail:
+
+
+```{r}
+# Chargez les librairies `tidyverse` et `ggpubr` 
+
+# Importer les données et mettez le dans un objet appelé `expt1`
+#(aide: utilisez la fonction appropriée au type de donnée)
+
+```
+
+
+```{r,  eval = TRUE,message=FALSE, echo=FALSE}
+
+library(tidyverse)
+library(ggpubr)
+
+expt1 <- read_csv("../data/dataPRL.csv")
+
+```
+
+<br>
+
+<br>
+
+
+# 1. Exploration générale des données
+
+<br>
+
+
+Pour l'ensemble du projet, travaillez uniquement sur les données mesurées en 2019.
+
+*Aide: Filtrez le tableau pour ne garder que les lignes pour lesquelles `annee` est égal à 2019 et gardez le dans un nouvel objet (`expt1_2019`).*
+
+<br>
+
+> Combien y a t-il de lignes et de colonnes dans `expt1_2019`?
+
+> Combien y a-t-il de génotypes? Lesquels sont-ils?
+*Aide: Utilisez la fonction `unique()`*
+
+
+> Quelle est la valeur moyenne pour la longueur de racine primaire, pour l'ensemble de `expt1_2019`? Quelles sont les valeurs minimales et maximales?
+
+> Y a-t-il des données manquantes?
+
+<br>
+
+<br>
+
+# 2. Analyse de l'impact du génotype sur la longueur de la racine.
+
+<br>
+
+Pour cette partie, travaillez uniquement sur les données mesurées pour les plantes ayant poussé sur le milieu C3 (qui est le milieu standard).
+
+*Aide: Filtrez le tableau `expt1_2019` pour ne garder que les lignes pour lesquelles `milieu` est égal à "C3".*
+
+<br>
+
+<br>
+
+> Quelle est la moyenne de la longueur de la racine pour chaque génotype?
+
+*Aide : Sur le tableau filtré, groupez les individus par génotype, puis calculez la moyenne de la longueur de la racine pour chaque génotype*
+
+<br>
+
+<br>
+
+> Quelle est la distribution de la longueur de la racine pour chaque génotype?
+
+*Aide : Sur le tableau filtré, faite un graphique de type violin, ou un boxplot (avec des points en jitter) de la longueur de la racine pour chaque génotype*
+
+<br>
+
+<br>
+
+> Que pouvez vous conclure? Est-ce que la longueur de la racine primaire est différente dans certains génotypes (pour les plantes poussant dans le milieu de culture standard)?
+
+<br>
+
+<br>
+
+# 3. Analyse de l'impact du milieu de croissance sur la longueur de la racine.
+
+<br>
+
+Pour cette partie, travaillez uniquement sur les données mesurées pour le génotype Col-0.
+
+*Aide: Filtrez le tableau `expt1_2019` pour ne garder que les lignes pour lesquelles `genotype` est égal à "Col-0".*
+
+<br>
+
+<br>
+
+> Quelle est la moyenne de la longueur de la racine pour les plantes ayant poussé dans chaque milieu de culture?
+
+*Aide : Sur le tableau filtré, groupez les individus par le milieu de culture, puis calculez la moyenne de la longueur de la racine pour chaque groupe*
+
+
+<br>
+
+<br>
+
+> Quelle est la distribution de la longueur de la racine pour les plantes ayant poussé dans chaque milieu de culture?
+
+*Aide : Sur le tableau filtré, faite un graphique de type violin, ou un boxplot (avec des points en jitter) de la longueur de la racine pour chaque milieu de culture*
+
+
+<br>
+
+<br>
+
+> Que pouvez vous conclure? Est-ce que la longueur de la racine primaire est différente dans certains milieux de culture pour le génotype Col-0?
+
+*Aide: L'information pour chaque milieu de culture se trouve dans la table `milieu.csv` *
+
+<br>
+
+<br>
+
+# 4. Analyse de l’interaction entre génotype et milieu de culture pour l'impact sur la longueur de la racine.
+
+<br>
+
+
+> Quelle est la distribution de la longueur de la racine pour les plantes ayant poussé dans chaque milieu de culture, avec un sous graphique par génotype?
+
+*Aide : Sur le tableau `expt1_2019`, faite un graphique de type violin, ou un boxplot (avec des points en jitter) de la longueur de la racine pour chaque milieu de culture, en faisant des facets en fonction du génotype*
+
+<br>
+
+Si possible ajoutez des résultats statistiques comparant les longueurs de racine primaire pour chacun des milieux de culture par rapport au milieu C3 (milieu standard).
+
+*Aide: Référez vous à la correction du BONUS de l'exercice 3 pour voir comment faire des tests statistiques pour les seules paires qui vous intéressent* 
+
+<br>
+
+<br>
+
+> Est-ce que certains génotypes sont plus affectés par le milieu de culture que d'autres pour la longueur de la racine primaire? 
+
+<br>
+
+<br>
+
+> Quelle est la distribution de la longueur de la racine pour chaque génotype, avec un sous graphique par milieu de culture?
+
+*Aide : Sur le tableau `expt1_2019`, faite un graphique de type violin, ou un boxplot (avec des points en jitter) de la longueur de la racine pour chaque génotype, en faisant des facets en fonction du milieu de culture*
+
+<br>
+
+Si possible ajoutez des résultats statistiques comparant les longueurs de racine primaire pour chacun des mutants par rapport à Col-0 (contrôle).
+
+*Aide: Référez vous à la correction du BONUS de l'exercice 3 pour voir comment faire des tests statistiques pour les seules paires qui vous intéressent* 
+
+<br>
+
+<br>
+
+
+> Est-ce que les différences de longueur de racine primaire entres génotypes sont plus marquées sur certains milieux de culture? 
+
+
