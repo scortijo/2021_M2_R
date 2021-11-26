@@ -38,7 +38,7 @@ Les différentes séances sont (avec accès au cours):
 Deuxième partie:
 **Travail de groupe: Exploration de données**
 
-**A VENIR** [Guide pour l'examen]()
+**A VENIR** [Guide pour l'examen](session3/materiel/Rapport_exam.html)
 
 
 
@@ -50,7 +50,7 @@ L'examen final sera sous la forme d'un projet de groupe. Le but sera d'analyser 
 
 Vous commencerez à travailler sur ce projet de groupe lors de la dernière séance, et devrez le rendre le vendredi 17 Décembre 2021 à minuit au plus tard.  
 
-[Guide pour l'examen]()
+[Guide pour l'examen](session3/materiel/Rapport_exam.html)
 
 
 <br>
