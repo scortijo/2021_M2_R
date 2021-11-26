@@ -38,7 +38,7 @@ Les différentes séances sont (avec accès au cours):
 Deuxième partie:
 **Travail de groupe: Exploration de données**
 
-**A VENIR** [Guide pour l'examen](session3/materiel/Rapport_exam.html)
+[Guide pour l'examen](session3/materiel/Rapport_exam.html)
 
 
 
